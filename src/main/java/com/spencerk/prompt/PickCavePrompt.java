@@ -1,5 +1,7 @@
 package com.spencerk.prompt;
 
+import com.spencerk.inventory.PlayerInventory;
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -18,10 +20,8 @@ public class PickCavePrompt implements Prompt{
         int playerChoice = -1;
 
         //Print prompt
-        System.out.print("You are in a land full of dragons. In front of you are two caves. ");
-        System.out.print("In one cave is a friendly dragon who will share part of his hoard with you. ");
-        System.out.println("In the other cave, the dragon is not friendly and will eat you!");
-        System.out.println("Pick wisely... Enter 1 or 2");
+
+        System.out.println("Pick wisely... Enter 1 or 2 to pick a cave. Enter 3 to see your items.");
 
         //Get player choice and return next prompt based on that choice
         while(true) {
@@ -32,12 +32,23 @@ public class PickCavePrompt implements Prompt{
                 playerChoice = Integer.parseInt(input);
             } catch(Exception e) {}
 
-            if(playerChoice != 1 && playerChoice != 2) {
-                System.err.println("Invalid choice. Please enter 1 or 2");
+            if(playerChoice < 1 || playerChoice > 3) {
+                System.err.println("Invalid choice. Please enter 1, 2 or 3");
+            } else if(playerChoice == 3) {
+                PlayerInventory.inventory.printInventory();
             } else {
-                switch(this.random.nextInt(2) + 1) {
-                    case 1: return PromptFactory.getGoodEndingPrompt();
-                    case 2: return PromptFactory.getBadEndingPrompt();
+                //Adjusted odds to 1/4 being a bad ending
+                final int OODS = 4;
+                Prompt  p1 = random.nextInt(OODS) > 0 ?
+                                PromptFactory.getGoodEndingPrompt() : PromptFactory.getBadEndingPrompt(),
+                        p2 = random.nextInt(OODS) > 0 ?
+                                PromptFactory.getGoodEndingPrompt() : PromptFactory.getBadEndingPrompt();
+
+                //P1 and P2 are both random and can both either be good or bad endings
+                switch(playerChoice) {
+                    case 1: return p1;
+                    case 2: return p2;
+
                 }
             }
 

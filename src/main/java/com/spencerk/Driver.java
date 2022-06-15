@@ -7,7 +7,7 @@ public class Driver {
 
     public static void main(String[] args) {
 
-        Prompt  prompt = PromptFactory.getPickCavePrompt();
+        Prompt  prompt = PromptFactory.getGameDiscriptionPrompt();
 
         while(prompt != null) prompt = prompt.run();
 
