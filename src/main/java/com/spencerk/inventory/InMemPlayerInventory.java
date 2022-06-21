@@ -41,4 +41,9 @@ public class InMemPlayerInventory implements PlayerInventory{
     public void clearInventory() {
         this.inventory.clear();
     }
+
+    @Override
+    public int size() {
+        return inventory.size();
+    }
 }

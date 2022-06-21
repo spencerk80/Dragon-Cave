@@ -7,5 +7,6 @@ public interface PlayerInventory {
     void addItem(String item);
     void printInventory();
     void clearInventory();
+    int size();
 
 }
